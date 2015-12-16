@@ -37,8 +37,7 @@ class SingleMode(object):
         self.AllLists       = []
 
         # default member, all SingleMode applications have this option
-        self.help = Terminator("show this message", "h")
-
+        self.help = Flag("show this message", False, "h")
 
 
     def register(self):
