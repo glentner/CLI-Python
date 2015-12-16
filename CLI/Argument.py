@@ -19,10 +19,6 @@ class Argument(object):
         self.dtype       = type(default)
         self.short       = None if not short else str(short)
 
-        if short and len(self.short) != 1:
-            raise Error("For `{}`: the *short* form name should be a single "
-                        "character in length!".format(self.name))
-
         self.value = self.default
         self.given = False
 
