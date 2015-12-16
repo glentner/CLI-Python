@@ -7,7 +7,7 @@
 from .Argument import Argument
 
 class Required(Argument):
-    """A Required *Argument* is one with no *default*."""
+    """A Required *Argument* is one with no *default* value."""
 
 
     def __init__(self, description, dtype=str):
