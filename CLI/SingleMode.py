@@ -164,7 +164,7 @@ class SingleMode(object):
         if len(self.Remainder) == 0 and len(self.AllLists) == 0:
             return
 
-        if len(self.Remainder) > 0 and len(self.AllDefaults) == 0:
+        if len(self.Remainder) > 0 and len(self.AllLists) == 0:
             raise Error("There were {} too many arguments!".format(len(self.Remainder)))
 
         if len(self.Remainder) == 0 and len(self.AllLists) > 0:
