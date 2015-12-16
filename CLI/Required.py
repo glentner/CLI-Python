@@ -9,7 +9,6 @@ from .Argument import Argument
 class Required(Argument):
     """A Required *Argument* is one with no *default* value."""
 
-
     def __init__(self, description, dtype=str):
         """Initialize the new Required(Argument)."""
         super(Required, self).__init__(description)
@@ -18,5 +17,5 @@ class Required(Argument):
 
     def help(self, spacing = 10):
         """Return a the *help* string for this *Argument*."""
-        return " {}{}{} (required).\n".format(self.name, " " * (spacing -
-                                              len(self.name)), self.description)
+        return " {}{}{} (required).\n".format(self.name, " " * (spacing - len(self.name)),
+                self.description)
