@@ -82,6 +82,16 @@ class SingleMode(object):
                 raise Error("There can only be one List argument! Having more "
                         "than one List is an ill-defined application.")
 
+            # attach a `name` member to all Argument members
+            for names in self.Registry:
+                self.__dict__[names].name = names
+
+            # Flags must have a single character `short` for the flag stacking to work
+            for arg in self.Registry:
+                if self.__dict__[arg].short and len(self.__dict__[arg].short) != 1:
+                    raise Error("For `{}`: the *short* form name should be a single "
+                         "character in length!".format(arg))
+
 
     def rc(self):
         """Runtime configuration (parse *argv*)"""
