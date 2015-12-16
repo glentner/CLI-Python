@@ -104,7 +104,7 @@ class SingleMode(object):
         self.register()
 
         if not self.argv:
-            raise Usage(self.usage())
+            raise Usage(self.usage_statement())
 
 
         # identify the switches and flags
@@ -117,10 +117,12 @@ class SingleMode(object):
             else:
                 self.Remainder[i] = arg
 
+        if self.help.given:
+            raise Usage(self.help_statement())
 
         for flag in self.AllTerminators:
             if flag.given:
-                raise Usage(flag.info)
+                raise Usage(flag.information)
 
         # walk the switches and assign values
         for i, switch in self.GivenSwitches.items():
@@ -135,7 +137,6 @@ class SingleMode(object):
 
             self.__dict__[switch].set(self.Remainder[i+1])
             del(self.Remainder[i+1])
-
 
         if len(self.Remainder) < len(self.AllRequired):
             raise Error("Insufficient arguments given: {} have not been provided."
@@ -267,7 +268,7 @@ class SingleMode(object):
 
 
 
-    def usage(self):
+    def usage_statement(self):
         """Display a usage statement for the application."""
 
         message = "usage: {}".format(self.name)
@@ -291,8 +292,7 @@ class SingleMode(object):
         return "{}\n\n{}\n\n".format(message, __doc__)
 
 
-
-    def help(self):
+    def help_statement(self):
         """Show help information for this application (called with -h | --help)."""
 
         spacing = 0
@@ -301,7 +301,7 @@ class SingleMode(object):
                 spacing = len(names)
 
         spacing += 10
-        message  = self.usage()
+        message  = self.usage_statement()
 
         for arg in self.AllRequired:
             message += self.__dict__[arg].help(spacing)
