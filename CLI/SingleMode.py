@@ -46,7 +46,7 @@ class SingleMode(object):
         """
 
         self.Registry = {name: arg for name, arg in self.__dict__.items()
-                if issubclass(arg, Argument)}
+                if issubclass(type(arg), Argument)}
 
         for name, arg in self.Registry.items():
 
@@ -330,8 +330,12 @@ class SingleMode(object):
     def main(self):
         raise Error("*main* must be define for the SingleMode application!")
 
-    def Exe(self):
+    def Exe(self, exceptions=False):
         """Parse the *argv* and run *main*."""
+
+        if exceptions:
+            self.rc()
+            return self.main()
 
         try:
             self.rc()
@@ -341,6 +345,6 @@ class SingleMode(object):
             print(usage)
             return 0
 
-        except Exception as err:
+        except Error as err:
             print(err)
             return 1
