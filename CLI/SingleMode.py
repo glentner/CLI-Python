@@ -86,6 +86,12 @@ class SingleMode(object):
             for names in self.Registry:
                 self.__dict__[names].name = names
 
+            # check the *default* value types for boolean Flags
+            for names in self.AllFlags:
+                if type(self.__dict__[names].default) is not bool:
+                    raise Error("For Flag(Argument) `{}`: the *default* value must "
+                            "be of {}".format(names, bool))
+
             # Flags must have a single character `short` for the flag stacking to work
             for arg in self.Registry:
                 if self.__dict__[arg].short and len(self.__dict__[arg].short) != 1:
