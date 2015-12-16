@@ -19,11 +19,11 @@ class SingleMode(object):
     a parent class.
     """
 
-    def __init__(self, *vargs):
-        """Accepts the command line arguments *vargs* passed to *main*."""
+    def __init__(self, argv):
+        """Accepts the command line arguments *argv* passed to *main*."""
 
-        self.name  = vargs[0]
-        self.vargs = list(vargs[1:])
+        self.name  = argv[0]
+        self.argv = list(argv[1:])
         self.info  = None
 
         self.Remainder      = {}
@@ -84,16 +84,16 @@ class SingleMode(object):
 
 
     def rc(self):
-        """Runtime configuration (parse *vargs*)"""
+        """Runtime configuration (parse *argv*)"""
 
         self.register()
 
-        if not self.vargs:
+        if not self.argv:
             raise Usage(self.usage())
 
 
         # identify the switches and flags
-        for i, arg in enumerate(self.vargs):
+        for i, arg in enumerate(self.argv):
             if arg[0] == "-":
                 if len(arg) < 2:
                     raise Error("'-' is not a recognized flag or switch!")
@@ -116,7 +116,7 @@ class SingleMode(object):
                             "none left!".format(switch))
                 else:
                     raise Error("--{} expected a free argument to follow but found "
-                            "`{}` instead!".format(switch, self.vargs[i+1]))
+                            "`{}` instead!".format(switch, self.argv[i+1]))
 
             self.__dict__[switch].set(self.Remainder[i+1])
             del(self.Remainder[i+1])
@@ -316,7 +316,7 @@ class SingleMode(object):
         raise Error("*main* must be define for the SingleMode application!")
 
     def Exe(self):
-        """Parse the *vargs* and run *main*."""
+        """Parse the *argv* and run *main*."""
 
         try:
             self.rc()
