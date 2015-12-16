@@ -19,7 +19,5 @@ class Default(Argument):
 
     def help(self, spacing = 10):
         """Return a the *help* string for this *Argument*."""
-        spacing = " " * (spacing - len(self.name))
-
         return " {}{}{} (default: {}).\n".format(self.name, " " * (spacing - len(self.name)),
                                                  self.description, self.default)
