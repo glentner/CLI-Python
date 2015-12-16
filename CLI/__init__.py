@@ -17,4 +17,8 @@ from .Flag       import Flag
 from .Terminator import Terminator
 from .List       import List
 
-__all__ = [Error, Argument, Required, Default, Switch, Flag, Terminator, List]
+from .SingleMode import SingleMode
+
+
+__all__ = [Error, Argument, Required, Default, Switch, Flag, Terminator, List,
+        SingleMode]
