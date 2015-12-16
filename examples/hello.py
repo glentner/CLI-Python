@@ -15,6 +15,8 @@ class Hello(CLI.SingleMode):
     Pass the -h | --help flag for more information.
     """
 
+    # `self.__doc__` becomes the program description!
+
     def __init__(self, argv):
         """Pass the sys.argv parameter list to your __init__ method."""
 
@@ -60,7 +62,7 @@ class Hello(CLI.SingleMode):
                 print(" {} and {}".format(*users), end="")
 
             else:
-                print(", ".join(users[:-1]), end="")
+                print(" " + ", ".join(users[:-1]), end="")
                 print(" and {}".format(users[-1]), end="")
 
             print("; {}'".format(message))
