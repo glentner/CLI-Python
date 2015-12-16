@@ -4,6 +4,8 @@
 
 """Implementation of the SingleMode class."""
 
+import os
+
 from .Argument   import Argument
 from .Required   import Required
 from .Default    import Default
@@ -22,9 +24,9 @@ class SingleMode(object):
     def __init__(self, argv):
         """Accepts the command line arguments *argv* passed to *main*."""
 
-        self.name  = argv[0]
+        self.name = os.path.basename(argv[0])
         self.argv = list(argv[1:])
-        self.info  = None
+        self.info = None
 
         self.Remainder      = {}
         self.GivenSwitches  = {}
@@ -106,7 +108,6 @@ class SingleMode(object):
         if not self.argv:
             raise Usage(self.usage_statement())
 
-
         # identify the switches and flags
         for i, arg in enumerate(self.argv):
             if arg[0] == "-":
@@ -121,8 +122,8 @@ class SingleMode(object):
             raise Usage(self.help_statement())
 
         for flag in self.AllTerminators:
-            if flag.given:
-                raise Usage(flag.information)
+            if self.__dict__[flag].given:
+                raise Usage(self.__dict__[flag].information)
 
         # walk the switches and assign values
         for i, switch in self.GivenSwitches.items():
@@ -181,7 +182,7 @@ class SingleMode(object):
             if len(option) < 2:
                 raise Error("'--' is not a recognized flag or switch!")
 
-            self.long_form(index, option)
+            self.long_form(index, option[1:])
 
         else:
             self.short_form(index, option)
@@ -289,14 +290,19 @@ class SingleMode(object):
             else:
                 message += " [--{} {}]".format(arg, self.__dict__[arg].default)
 
-        return "{}\n\n{}\n\n".format(message, __doc__)
+        doc_lines = [line.strip() for line in self.__doc__.split("\n")]
+        if not doc_lines[-1]:
+            # on multiline docstrings the last line is empty
+            del(doc_lines[-1])
+
+        return "{}\n\n{}".format(message, "\n".join(doc_lines))
 
 
     def help_statement(self):
         """Show help information for this application (called with -h | --help)."""
 
         spacing = 0
-        for names in self.Registry.values():
+        for names in self.Registry:
             if len(names) > spacing:
                 spacing = len(names)
 
@@ -322,7 +328,7 @@ class SingleMode(object):
             message += self.__dict__[arg].help(spacing)
 
         if self.info:
-            message += "\n{}\n".format(self.info)
+            message += "\n{}".format(self.info)
 
         return message
 
