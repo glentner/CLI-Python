@@ -14,9 +14,9 @@ class Switch(Argument):
     """
 
 
-    def __init__(self, name, description, default, short=None):
+    def __init__(self, description, default, short=None):
         """Initialize the new Switch(Argument)."""
-        super(Switch, self).__init__(name, description, default, short)
+        super(Switch, self).__init__(description, default, short)
 
 
     def help(self, spacing = 10):
