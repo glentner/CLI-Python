@@ -7,7 +7,6 @@
 from .Argument   import Argument
 from .Exceptions import Error
 
-
 class Flag(Argument):
     """
     A Flag *Argument* is a Switch that assumes True/False. No
@@ -15,13 +14,9 @@ class Flag(Argument):
     *short* name (e.g., -abc).
     """
 
-
-    def __init__(self, name, description, default, short=None):
+    def __init__(self, description, default, short=None):
         """Initialize the new Switch(Argument)."""
-        super(Flag, self).__init__(name, description, default, short)
-        if type(default) is not bool:
-            raise Error("For Flag(Argument) `{}`: the *default* value must "
-                    "be of {}".format(self.name, bool))
+        super(Flag, self).__init__(description, default, short)
 
 
     def help(self, spacing = 10):
