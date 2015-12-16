@@ -13,8 +13,7 @@ class Terminator(Argument):
     --copyright).
     """
 
-
-    def __init__(self, name, description, information, short=None):
+    def __init__(self, description, information, short=None):
         """Initialize the new Terminator(Argument)."""
         self.infomation = str(information)
-        super(Terminator, self).__init__(name, description, False, short)
+        super(Terminator, self).__init__(description, False, short)
