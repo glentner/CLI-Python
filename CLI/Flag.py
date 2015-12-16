@@ -15,7 +15,7 @@ class Flag(Argument):
     """
 
     def __init__(self, description, default, short=None):
-        """Initialize the new Switch(Argument)."""
+        """Initialize the new Flag(Argument)."""
         super(Flag, self).__init__(description, default, short)
 
 
@@ -26,7 +26,7 @@ class Flag(Argument):
                     (spacing - len(self.name) - 2), self.description, self.default)
         else:
             return " -{}, --{}{}{} (default: {}).\n".format(self.short, self.name,
-                    " " * (spacing - len(self.name) - 4), self.description, self.default)
+                    " " * (spacing - len(self.name) - 6), self.description, self.default)
 
 
     def set(self, value):
