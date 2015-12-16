@@ -12,17 +12,16 @@ class List(Argument):
     line.
     """
 
-
-    def __init__(self, name, description, dtype=str):
+    def __init__(self, description, dtype=str):
         """Initialize the new List(Argument)."""
-        super(List, self).__init__(name, description)
+        super(List, self).__init__(description)
         self.dtype = dtype
 
 
     def help(self, spacing = 10):
         """Return a the *help* string for this *Argument*."""
-        return " {}...{}{} (required).\n".format(self.name, " " * (spacing -
-                                              len(self.name) - 3), self.description)
+        return " {}...{}{} (required).\n".format(self.name, " " * (spacing - len(self.name) - 3),
+                self.description)
 
 
     def set(self, value):
