@@ -25,4 +25,4 @@ class Switch(Argument):
                     (spacing - len(self.name) - 2), self.description, self.default)
         else:
             return " -{}, --{}{}{} (default: {}).\n".format(self.short, self.name,
-                    " " * (spacing - len(self.name) - 4), self.description, self.default)
+                    " " * (spacing - len(self.name) - 6), self.description, self.default)
