@@ -12,9 +12,9 @@ class Default(Argument):
     not necessarily need to be provided.
     """
 
-    def __init__(self, description, default):
+    def __init__(self, description, default, name=None):
         """Initialize the new Default(Argument)."""
-        super(Default, self).__init__(description, default)
+        super(Default, self).__init__(description, default, name=name)
 
 
     def help(self, spacing = 10):
