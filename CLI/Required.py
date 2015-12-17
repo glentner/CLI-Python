@@ -9,9 +9,9 @@ from .Argument import Argument
 class Required(Argument):
     """A Required *Argument* is one with no *default* value."""
 
-    def __init__(self, description, dtype=str):
+    def __init__(self, description, dtype=str, name=None):
         """Initialize the new Required(Argument)."""
-        super(Required, self).__init__(description)
+        super(Required, self).__init__(description, name=name)
         self.dtype = dtype
 
 
