@@ -100,6 +100,11 @@ class SingleMode(object):
                     raise Error("For `{}`: the *short* form name should be a single "
                          "character in length!".format(arg))
 
+            # no Arguments can share a `name`
+            name_set = set([self.__dict__[arg].name for arg in self.Registry])
+            if len(name_set) != len(self.Registry):
+                raise Error("There was an Argument *name* clash in {}".format(self.name))
+
 
     def rc(self):
         """Runtime configuration (parse *argv*)"""
