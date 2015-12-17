@@ -13,9 +13,9 @@ class Switch(Argument):
     **must** follow the flag on the command line.
     """
 
-    def __init__(self, description, default, short=None):
+    def __init__(self, description, default, short=None, name=None):
         """Initialize the new Switch(Argument)."""
-        super(Switch, self).__init__(description, default, short)
+        super(Switch, self).__init__(description, default=default, short=short, name=name)
 
 
     def help(self, spacing = 10):
