@@ -12,9 +12,9 @@ class List(Argument):
     line.
     """
 
-    def __init__(self, description, dtype=str):
+    def __init__(self, description, dtype=str, name=None):
         """Initialize the new List(Argument)."""
-        super(List, self).__init__(description)
+        super(List, self).__init__(description, name=name)
         self.dtype = dtype
 
 
