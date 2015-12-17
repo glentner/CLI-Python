@@ -14,9 +14,9 @@ class Flag(Argument):
     *short* name (e.g., -abc).
     """
 
-    def __init__(self, description, default, short=None):
+    def __init__(self, description, default, short=None, name=None):
         """Initialize the new Flag(Argument)."""
-        super(Flag, self).__init__(description, default, short)
+        super(Flag, self).__init__(description, default=default, short=short, name=name)
 
 
     def help(self, spacing = 10):
