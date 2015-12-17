@@ -46,29 +46,24 @@ class Hello(CLI.SingleMode):
     def main(self):
         """The *main* function to be executed by the application."""
 
-        verbose  = self.verbose.value
-        computer = self.computer.value
-        message  = self.message.value
-        users    = self.user.value
+        if self.verbose:
 
-        if verbose:
+            print("Incoming message from {}: 'Greetings:".format(self.computer), end="")
 
-            print("Incoming message from {}: 'Greetings:".format(computer), end="")
+            if len(self.users) == 1:
+                print(" {}".format(self.users[0]), end="")
 
-            if len(users) == 1:
-                print(" {}".format(users[0]), end="")
-
-            elif len(users) == 2:
-                print(" {} and {}".format(*users), end="")
+            elif len(self.users) == 2:
+                print(" {} and {}".format(*self.users), end="")
 
             else:
-                print(" " + ", ".join(users[:-1]), end="")
-                print(" and {}".format(users[-1]), end="")
+                print(" " + ", ".join(self.users[:-1]), end="")
+                print(" and {}".format(self.users[-1]), end="")
 
-            print("; {}'".format(message))
+            print("; {}'".format(self.message))
 
         return 0
 
 
 if __name__ == "__main__":
-    sys.exit(Hello(sys.argv).Exe())
+    sys.exit( Hello(sys.argv).Exe() )
