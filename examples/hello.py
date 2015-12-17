@@ -25,7 +25,7 @@ class Hello(CLI.SingleMode):
 
         # add your Arguments
         self.user      = CLI.List("user names")
-        self.computer  = CLI.Switch("name of the computer", "Lisa", "c")
+        self.computer  = CLI.Switch("name of the computer", "Lisa", "c", name="computer-name")
         self.message   = CLI.Switch("the greeting", "how are you?", "m")
         self.verbose   = CLI.Flag("show output", False, "v")
         self.version   = CLI.Terminator("show version information", "hello.py (1.0.1)", "V")
