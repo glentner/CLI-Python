@@ -10,17 +10,36 @@ class Argument(object):
     """
     An abstract base class for derived argument types used by CLI.
     """
-    def __init__(self, description, default=None, short=None):
-        """A *description* are required of **all** Arguments.
+    def __init__(self, description, default=None, short=None, name=None):
+        """A *description* is required of **all** Arguments.
         A *default* value is required for a Default, Switch, or Flag.
+
+        description: str
+            A short description of the Argument to be displayed with the
+            *help* Flag is given.
+
+        default: ...
+            The *value* the Argument should take if it is not provided at
+            the command line. When given the *dtype* member will become
+            `type(default)`.
+
+        short: str
+            The single character alternate name for the Argument. For Flags
+            these can be stacked together (e.g., -abc).
+
+        name: str
+            When not given, the *name* member will be assigned later from
+            the variable name itself. If you wish to overide this implicit
+            behavior, specify an alternative name here.
         """
+
         self.description = str(description)
         self.default     = default
         self.dtype       = type(default)
         self.short       = None if not short else str(short)
-
-        self.value = self.default
-        self.given = False
+        self.value       = self.default
+        self.given       = False
+        self.name        = None if not name else str(name)
 
 
     def set(self, value):
@@ -35,10 +54,10 @@ class Argument(object):
 
     def __str__(self):
         """Return a string representation of the object."""
-        return ("{}\n".format(type(self)) +
-                "{}\n".format(self.description) +
-                "value={}, dtype={}".format(self.value, self.dtype) +
-                "\n" if not self.short else ", short={}\n".format(self.short))
+        return ("{}{}\n{}\nvalue={}{}".format(
+                "" if not self.name else "{}: ".format(self.name), self.dtype,
+                self.description, self.value,
+                "" if not self.short else ", short={}".format(self.short)))
 
 
     def __repr__(self):
