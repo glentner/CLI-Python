@@ -18,7 +18,8 @@ from .Terminator import Terminator
 from .List       import List
 
 from .SingleMode import SingleMode
+from .MultiMode import MultiMode
 
 
 __all__ = [Error, Argument, Required, Default, Switch, Flag, Terminator, List,
-        SingleMode]
+        SingleMode, MultiMode]
