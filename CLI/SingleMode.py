@@ -85,7 +85,8 @@ class SingleMode(object):
 
             # attach a `name` member to all Argument members
             for names in self.Registry:
-                self.__dict__[names].name = names
+                if not self.__dict__[names].name:
+                    self.__dict__[names].name = names
 
             # check the *default* value types for boolean Flags
             for names in self.AllFlags:
@@ -129,7 +130,7 @@ class SingleMode(object):
         for i, switch in self.GivenSwitches.items():
 
             if i + 1 not in self.Remainder:
-                if len(self.argv) <= i:
+                if len(self.argv) <= i + 1:
                     raise Error("--{} expected a free argument to follow but there were "
                             "none left!".format(switch))
                 else:
@@ -246,26 +247,29 @@ class SingleMode(object):
         """Set an argument given it's long form name."""
 
         # attempt to assign a flag first
-        if option in self.AllFlags:
+        for arg in self.__dict__:
+            if (issubclass(type(self.__dict__[arg]), Argument) and
+                    self.__dict__[arg].name == option):
 
-            if self.__dict__[option].given:
-                raise Error("The `{}` flag was already given!".format(option))
+                if isinstance(self.__dict__[arg], Flag):
 
-            self.__dict__[option].set(True)
-            self.__dict__[option].given = True
-            return
+                    if self.__dict__[arg].given:
+                        raise Error("The `{}` flag was already given!".format(option))
 
-        elif option in self.AllSwitches:
+                    self.__dict__[arg].set(True)
+                    self.__dict__[arg].given = True
+                    return
 
-            if self.__dict__[option].given:
-                raise Error("The `{}` switch was already given!".format(option))
+                elif isinstance(self.__dict__[arg], Switch):
 
-            self.GivenSwitches[index] = option
-            self.__dict__[option].given = True
-            return
+                    if self.__dict__[arg].given:
+                        raise Error("The `{}` switch was already given!".format(arg))
 
-        else:
-            raise Error("--{} does not name a flag or switch!".format(option))
+                    self.GivenSwitches[index] = arg
+                    self.__dict__[arg].given = True
+                    return
+
+        raise Error("--{} does not name a flag or switch!".format(option))
 
 
 
