@@ -343,17 +343,29 @@ class SingleMode(object):
 
 
     def main(self):
-        raise Error("*main* must be define for the SingleMode application!")
+        """*main* must be redefined for a SingleMode application!"""
+        raise Error("*main* must be redefined for a SingleMode application!")
 
-    def Exe(self, exceptions=False):
-        """Parse the *argv* and run *main*."""
 
-        if exceptions:
-            self.rc()
-            return self.main()
+    def Exe(self, reassign=True, exceptions=False):
+        """Parse the *argv* and run *main*.
+
+        reassign: bool
+            After parsing the *argv*, *reassign* the member arguments
+            to their *value*.
+
+        exceptions: bool
+            If True, re-raise the CLI.Error when caught.
+        """
 
         try:
             self.rc()
+
+            if reassign:
+                for name, arg in self.__dict__.items():
+                    if issubclass(type(arg), Argument):
+                        self.__dict__[name] = arg.value
+
             return self.main()
 
         except Usage as usage:
@@ -361,5 +373,9 @@ class SingleMode(object):
             return 0
 
         except Error as err:
+
+            if exceptions:
+                raise
+
             print(err)
             return 1
