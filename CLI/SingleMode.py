@@ -148,7 +148,7 @@ class SingleMode(object):
         if len(self.Remainder) < len(self.AllRequired):
             raise Error("Insufficient arguments given: {} have not been provided."
                 .format(", ".join(['`{}`'.format(arg) for arg in
-                self.AllRequired[len(self.AllRequired) - len(self.Remainer):]])))
+                self.AllRequired[len(self.AllRequired) - len(self.Remainder):]])))
 
         self.Remainder = list(self.Remainder.values())
 
